@@ -1,0 +1,33 @@
+// Default font size in the browser is 16px
+// 16 * .625 = 10
+// In that way 1rem = 10px, 2.2rem == 22px, etc. 
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  background: #fff;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $md-size;
+}
+
+h1 {
+  font-size: $lg-size;
+  font-weight: 700;
+}
+
+button {
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+}
