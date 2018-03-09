@@ -31,3 +31,8 @@ select:focus,
 textarea:focus {
   outline: none;
 }
+
+.nav-active {
+  color: orangered;
+  font-weight: 700;
+}
