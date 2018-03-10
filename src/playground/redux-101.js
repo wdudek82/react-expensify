@@ -3,17 +3,17 @@ import { createStore } from 'redux';
 const store = createStore((state = { count: 0 }, action) => {
   switch (action.type) {
     case 'INCREMENT':
-      const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
+      const incrementBy = action.incrementBy;
       return {
         count: state.count + incrementBy
       };
     case 'DECREMENT':
-      const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : 1;
+      const decrementBy = action.decrementBy;
       return {
         count: state.count - decrementBy
       };
     case 'SET':
-      const setTo = typeof action.setTo === 'number' ? action.setTo : 1;
+      const setTo = action.setTo;
       return {
         count: setTo
       };
@@ -30,47 +30,39 @@ const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
 });
 
-function increment_counter(incrementBy = 1) {
-  store.dispatch({
-    type: 'INCREMENT',
-    incrementBy
-  });
-}
+// ACTION generators
+const incrementCount = ({ incrementBy = 1 } = {}) => ({
+  type: 'INCREMENT',
+  incrementBy
+});
 
-function decrement_counter(decrementBy = 1) {
-  store.dispatch({
-    type: 'DECREMENT',
-    decrementBy
-  });
-}
+const decrementCount = ({ decrementBy = 1 } = {}) => ({
+  type: 'DECREMENT',
+  decrementBy
+});
 
-function reset_counter() {
-  store.dispatch({
+const resetCount = () => ({
     type: 'RESET'
-  });
-}
+});
 
-function set_counter(setTo = 0) {
-  store.dispatch({
+const setCount = ({ setTo = 0 } = {}) => ({
     type: 'SET',
     setTo
-  });
-}
+});
 
-increment_counter();
+store.dispatch(incrementCount());
 
 // unsubscribe();
 
-increment_counter(5);
-increment_counter(7);
+store.dispatch(incrementCount({ incrementBy: 7 }));
+store.dispatch(incrementCount());
 
-decrement_counter(3);
-decrement_counter(2);
+store.dispatch(decrementCount());
+store.dispatch(decrementCount());
 
-reset_counter();
+store.dispatch(resetCount());
 
-increment_counter();
+store.dispatch(incrementCount());
 
-set_counter(1337);
-decrement_counter(7);
-
+store.dispatch(setCount({ setTo: 1337 }));
+store.dispatch(decrementCount({ decrementBy: 7 }));
