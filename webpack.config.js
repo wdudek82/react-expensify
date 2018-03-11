@@ -4,6 +4,7 @@ console.log(path.join(__dirname, 'public'));
 
 module.exports = {
   entry: './src/playground/redux-expensify.js',
+  mode: 'development',  
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
@@ -25,7 +26,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     compress: true,
-    port: 9000,
-    historyApiFallback: true 
+    port: 8000,
+    historyApiFallback: true
   }
 };
