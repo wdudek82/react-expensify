@@ -105,7 +105,6 @@ const filterReducerDefaultState = {
   endDate: undefined
 };
 const filterReducer = (state = filterReducerDefaultState, action) => {
-  console.log(state);
   switch (action.type) {
     case 'SET_TEXT_FILTER':
       return {
@@ -137,6 +136,28 @@ const filterReducer = (state = filterReducerDefaultState, action) => {
   }
 };
 
+// =============== Get visible expenses
+const getVisibleExpenses = (
+  expenses,
+  { text, sortBy, startDate, endDate }
+) => {
+  return expenses.filter(expense => {
+    const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
+    const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+    
+    const expenseDescription = expense.description.toLowerCase();
+    const includesText = expenseDescription.includes(text.toLowerCase());
+
+    return startDateMatch && endDateMatch && includesText;
+  }).sort((a, b) => {
+    if (sortBy === 'date') {
+      return a.createdAt < b.createdAt;
+    } else if (sortBy === 'amount') {
+      return a.amount < b.amount;
+    }
+  });
+}
+
 // =============== Store creation
 const store = createStore(
   combineReducers({
@@ -147,56 +168,27 @@ const store = createStore(
 
 // =============== Store subscrbe
 const unsubscribe = store.subscribe(() => {
-  console.log(store.getState());
+  const state = store.getState();
+  const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+
+  console.log(visibleExpenses);
 });
 
 // =============== Dispatching actions
 const expenseOne = store.dispatch(addExpense({
-  description: 'January Rent',
+  description: 'Rent',
   note: 'This was the final payment for that address',
-  amount: 54500,
-  createdAt: 0
+  amount: 100,
+  createdAt: 1000
 }));
 
 const expenseTwo = store.dispatch(addExpense({
-  description: 'February Rent',
-  note: 'This was new payment for that address',
-  amount: 244,
-  createdAt: 0
+  description: 'Coffee',
+  amount: 300,
+  createdAt: -1000
 }));
 
-store.dispatch(
-  removeExpense({ id: expenseOne.expense.id })
-);
-
-store.dispatch(
-  editExpense(
-    expenseTwo.expense.id,
-    {
-      description: 'Coffee & Cream',
-      amount: 299,
-      note: 'Great Coffee:)'
-    })
-);
-
-store.dispatch(
-  setTextFilter('Blableblu')
-);
-
-store.dispatch(
-  setSortByAmountFilter()
-);
-
-store.dispatch(
-  setStartDateFilter(998877)
-);
-
-store.dispatch(
-  setEndDateFilter()
-);
-
-store.dispatch(
-  setTextFilter('Omega')
-);
-
-console.log(expenseOne.expense.id);
+store.dispatch(setSortByAmountFilter());
+store.dispatch(setTextFilter('e'));
+store.dispatch(setStartDateFilter(-1000));
+store.dispatch(setEndDateFilter(3000));
