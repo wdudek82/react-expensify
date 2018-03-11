@@ -17,7 +17,7 @@ const demoState = {
   }
 };
 
-// =============== Expense Actions
+// =============== Expense Action Generators
 const addExpense = (
   {
     description = '',
@@ -41,29 +41,35 @@ const removeExpense = ({ id } = {}) => ({
   id
 });
 
-const editExpense = (
-  {
-    id,
-    description = '',
-    note = '',
-    amount = 0,
-    createdAt = 0
-  }
-) => ({
+const editExpense = (id, updates) => ({
   type: 'EDIT_EXPENSE',
   id,
-  description,
-  note,
-  amount,
-  createdAt
+  updates
 });
 
-// =============== Filter Actions
-// SET_TEXT_FILTER
-// SORT_BY_DATE
-// SORT_BY_AMOUNT
-// SET_START_DATE
-// SET_END_DATE
+// =============== Filter Action Generators
+const setTextFilter = (text = '') => ({
+  type: 'SET_TEXT_FILTER',
+  text
+});
+
+const setSortByDateFilter = () => ({
+  type: 'SORT_BY_DATE',
+});
+
+const setSortByAmountFilter = () => ({
+  type: 'SORT_BY_AMOUNT'
+});
+
+const setStartDateFilter = (startDate) => ({
+  type: 'SET_START_DATE',
+  startDate
+});
+
+const setEndDateFilter = (endDate) => ({
+  type: 'SET_END_DATE',
+  endDate
+}); 
 
 // =============== Expense Reducer
 const expensesReducerDefaultState = [];
@@ -75,16 +81,15 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
         action.expense
       ];
     case 'EDIT_EXPENSE':
-      const updatedExpense = {
-        description: action.description,
-        note: action.note,
-        amount: action.amount,
-        createdAt: action.createdAt
-      };
-      return [
-        ...state.filter(({ id }) => id !== action.id),
-        updatedExpense
-      ];
+      return state.map((expense) => {
+          if (expense.id === action.id) {
+            return {
+              ...expense,
+              ...action.updates
+            };
+          }
+          return expense;
+        });
     case 'REMOVE_EXPENSE':
       return state.filter(({ id }) => id !== action.id);
     default:
@@ -100,7 +105,33 @@ const filterReducerDefaultState = {
   endDate: undefined
 };
 const filterReducer = (state = filterReducerDefaultState, action) => {
+  console.log(state);
   switch (action.type) {
+    case 'SET_TEXT_FILTER':
+      return {
+        ...state,
+        text: action.text
+      };
+    case 'SORT_BY_DATE':
+      return {
+        ...state,
+        sortBy: 'date'
+      };
+    case 'SORT_BY_AMOUNT':
+      return {
+        ...state,
+        sortBy: 'amount'
+      };
+    case 'SET_START_DATE':
+      return {
+        ...state,
+        startDate: action.startDate
+      }
+    case 'SET_END_DATE':
+      return {
+        ...state,
+        endDate: action.endDate
+      };
     default:
       return state;
   }
@@ -140,21 +171,32 @@ store.dispatch(
 
 store.dispatch(
   editExpense(
-    { 
-      id: expenseTwo.expense.id,
-      description: 'Coffee',
-      note: 'One cup of delicious coffee',
+    expenseTwo.expense.id,
+    {
+      description: 'Coffee & Cream',
       amount: 299,
-      createdAt: 555
+      note: 'Great Coffee:)'
     })
 );
 
+store.dispatch(
+  setTextFilter('Blableblu')
+);
+
+store.dispatch(
+  setSortByAmountFilter()
+);
+
+store.dispatch(
+  setStartDateFilter(998877)
+);
+
+store.dispatch(
+  setEndDateFilter()
+);
+
+store.dispatch(
+  setTextFilter('Omega')
+);
+
 console.log(expenseOne.expense.id);
-
-
-const user = {
-  name: 'Jen',
-  age: 24
-};
-
-console.log({ ...user });
