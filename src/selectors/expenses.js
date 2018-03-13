@@ -1,4 +1,3 @@
-// =============== Get visible expenses
 const getVisibleExpenses = (
   expenses,
   { text, sortBy, startDate, endDate }

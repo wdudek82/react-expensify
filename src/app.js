@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Provider } from 'react-redux';
 import ExpensifyApp from './components/ExpensifyApp';
 import AppRouter from './routers/AppRouter';
 
@@ -44,4 +45,11 @@ const visibleExpenses = getVisibleExpenses(
 
 console.log(visibleExpenses);
 
-ReactDOM.render(<AppRouter />, root);
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
+);
+
+// ReactDOM.render(<AppRouter />, root);
+ReactDOM.render(jsx, root);
