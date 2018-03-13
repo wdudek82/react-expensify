@@ -37,6 +37,10 @@ store.dispatch(
   setTextFilter('wat')
 );
 
+setTimeout(() => {
+  store.dispatch(setTextFilter('gas'))
+}, 3000);
+
 const state = store.getState();
 const visibleExpenses = getVisibleExpenses(
   state.expenses,

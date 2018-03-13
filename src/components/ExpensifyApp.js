@@ -1,10 +1,11 @@
 import React from 'react';
+import ExpenseList from './ExpenseList';
 
 class ExpensifyApp extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello, Expensify!</h1>
+        <ExpenseList />
       </div>
     );
   };
