@@ -43,4 +43,5 @@ ReactDOM.render(
   <AuthInfo
     isAuthenticated={false}
     info="There are the details"
-  />, root);
+  />, root
+);
