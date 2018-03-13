@@ -29,7 +29,7 @@ store.dispatch(
     description: 'Gas bill',
     note: 'Gas bill for February',
     amount: 240,
-    createAt: 3400
+    createdAt: 3400
   })
 );
 
