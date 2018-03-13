@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
-import ExpensifyApp from './components/ExpensifyApp';
+import ExpenseDashboardPage from './components/ExpenseDashboardPage';
 import AppRouter from './routers/AppRouter';
 
 import configureStore from './store/configureStore';
@@ -34,12 +34,22 @@ store.dispatch(
 );
 
 store.dispatch(
+  addExpense({
+    description: 'Water pump',
+    note: 'Funny little water pump',
+    amount: 23000,
+    createdAt: 4332
+  })
+);
+
+
+store.dispatch(
   setTextFilter('water')
 );
 
-setTimeout(() => {
-  store.dispatch(setTextFilter('bill'))
-}, 3000);
+// setTimeout(() => {
+//   store.dispatch(setTextFilter('bill'))
+// }, 3000);
 
 const state = store.getState();
 const visibleExpenses = getVisibleExpenses(
