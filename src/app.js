@@ -7,7 +7,7 @@ import AppRouter from './routers/AppRouter';
 
 import configureStore from './store/configureStore';
 import { addExpense } from './actions/expenses';
-import { setTextFilter } from './actions/filters';
+import { setTextFilter, setSortByAmountFilter } from './actions/filters';
 import getVisibleExpenses from './selectors/expenses';
 
 import 'normalize.css/normalize.css';
@@ -38,14 +38,26 @@ store.dispatch(
     description: 'Water pump',
     note: 'Funny little water pump',
     amount: 23000,
-    createdAt: 4332
+    createdAt: 1342
+  })
+);
+
+store.dispatch(
+  addExpense({
+    description: 'Rent',
+    amount: 100500,
+    createdAt: 1000
   })
 );
 
 
-store.dispatch(
-  setTextFilter('water')
-);
+// store.dispatch(
+//   setTextFilter('water')
+// );
+
+// store.dispatch(
+//   setSortByAmountFilter()
+// );
 
 // setTimeout(() => {
 //   store.dispatch(setTextFilter('bill'))
