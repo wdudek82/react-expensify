@@ -30,8 +30,17 @@ class ExpenseForm extends React.Component {
   };
 
   onAmountChange = (e) => {
-    const amount = parseInt(e.target.value) || 0;
-    this.setState(() => ({ amount }));
+    let amount = e.target.value;
+
+    if (amount.match(/^\d*\.?\d{0,2}$/)) {
+      if (amount.length > 1 && amount[0] == 0) {
+        amount = amount.slice(1);
+      } else if (!amount.length) {
+        amount = '0';
+      }
+      this.setState(() => ({ amount }));
+    }
+    
   }
 
   onDateChange = (e) => {
@@ -56,11 +65,12 @@ class ExpenseForm extends React.Component {
               autoFocus
               value={this.state.description}
               onChange={this.onDescriptionChange}
+              required={true}
             />
           </div>
           <div>
             <input
-              type="number"
+              type="text"
               placeholder="Amount"
               value={this.state.amount}
               onChange={this.onAmountChange}
