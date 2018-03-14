@@ -69,7 +69,7 @@ const visibleExpenses = getVisibleExpenses(
   state.filters
 );
 
-console.log(visibleExpenses);
+// console.log(visibleExpenses);
 
 const jsx = (
   <Provider store={store}>
