@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import ExpenseDashboardPage from './components/ExpenseDashboardPage';
 import AppRouter from './routers/AppRouter';
 
+import moment from 'moment';
+
 import configureStore from './store/configureStore';
 import { addExpense } from './actions/expenses';
 import { setTextFilter, setSortByAmountFilter } from './actions/filters';
@@ -20,7 +22,7 @@ store.dispatch(
     description: 'Water Bill',
     note: 'My water bill for February',
     amount: 5200,
-    createdAt: 3000
+    createdAt: moment('19820511', 'YYYYMMDD').valueOf()
   })
 );
 
@@ -29,7 +31,7 @@ store.dispatch(
     description: 'Gas bill',
     note: 'Gas bill for February',
     amount: 4500,
-    createdAt: 3400
+    createdAt: moment('20060727', 'YYYYMMDD').valueOf()
   })
 );
 
@@ -38,7 +40,7 @@ store.dispatch(
     description: 'Water pump',
     note: 'Funny little water pump',
     amount: 23000,
-    createdAt: 1342
+    createdAt: moment('20150123', 'YYYYMMDD').valueOf()
   })
 );
 
@@ -46,7 +48,7 @@ store.dispatch(
   addExpense({
     description: 'Rent',
     amount: 100500,
-    createdAt: 1000
+    createdAt: moment('19861118', 'YYYYMMDD').valueOf()
   })
 );
 

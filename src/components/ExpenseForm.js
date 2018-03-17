@@ -1,27 +1,51 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { addExpense } from '../actions/expenses';
+import moment from 'moment';
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import { create } from 'domain';
 
+const now = moment();
+console.log(now.format('Do MMM YYYY HH:mm:ss Z'));
 
 class ExpenseForm extends React.Component {
-  state = {
-    description: '',
-    amount: 0,
-    createdAt: 0,
-    note: ''
+  constructor(props) {
+    super(props);
+    this.state = {
+      description: props.expense ? props.expense.description : '',
+      amount: props.expense ? (props.expense.amount / 100).toString() : '',
+      createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+      note: props.expense ? props.expense.note : '',
+      calendarFocused: false,
+      error: ''
+    };
   }
 
   handleSubmitForm = (e) => {
     e.preventDefault();
-    this.props.dispatch(
-      addExpense({ ...this.state })
-    );
-    this.setState(() => ({
-      description: '',
-      amount: 0,
-      createdAt: 0,
-      note: ''
-    }));
+
+    if (!this.state.description || !this.state.amount) {
+      this.setErrorMsg('Please provide description and amount.');
+    } else {
+      this.props.onSubmit({
+        description: this.state.description,
+        amount: parseFloat(this.state.amount, 10) * 100,
+        createdAt: this.state.createdAt.valueOf(),
+        note: this.state.note
+      });  // passed from AddExpensePage
+      this.setState(() => ({
+        description: '',
+        amount: 0,
+        note: ''
+      }));
+    }
+  };
+
+  setErrorMsg = (msg) => {
+    this.setState(() => ({ error: msg }));
+
+    setTimeout(() => {
+      this.setState(() => ({ error: undefined }))
+    }, 2000);
   };
 
   onDescriptionChange = (e) => {
@@ -32,20 +56,20 @@ class ExpenseForm extends React.Component {
   onAmountChange = (e) => {
     let amount = e.target.value;
 
-    if (amount.match(/^\d*\.?\d{0,2}$/)) {
-      if (amount.length > 1 && amount[0] == 0) {
-        amount = amount.slice(1);
-      } else if (!amount.length) {
-        amount = '0';
-      }
+    if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
       this.setState(() => ({ amount }));
     }
     
   }
 
-  onDateChange = (e) => {
-    const createdAt = parseInt(e.target.value) || 0;
-    this.setState(() => ({ createdAt }));
+  onDateChange = (createdAt) => {
+    if (createdAt) {
+      this.setState(() => ({ createdAt }));
+    }
+  }
+
+  onFocusChange = ({ focused }) => {
+    this.setState(() => ({ calendarFocused: focused }));
   }
 
   onNoteChange = (e) => {
@@ -56,7 +80,10 @@ class ExpenseForm extends React.Component {
   render() {
     return (
       <div>
-        <h1>Add Expense</h1>
+        {
+          this.state.error &&
+          <h4 style={{color: 'red'}}>{this.state.error}</h4>
+        }
         <form onSubmit={this.handleSubmitForm}>
           <div>
             <input
@@ -65,7 +92,6 @@ class ExpenseForm extends React.Component {
               autoFocus
               value={this.state.description}
               onChange={this.onDescriptionChange}
-              required={true}
             />
           </div>
           <div>
@@ -76,14 +102,16 @@ class ExpenseForm extends React.Component {
               onChange={this.onAmountChange}
             />
           </div>
-          <div>
-            <input
-              type="number"
-              placeholder="Date"
-              value={this.state.createdAt}
-              onChange={this.onDateChange}
-            />
-          </div>
+          <SingleDatePicker
+            date={this.state.createdAt} // momentPropTypes.momentObj or null
+            onDateChange={date => this.onDateChange(date)} // PropTypes.func.isRequired
+            focused={this.state.calendarFocused} // PropTypes.bool
+            onFocusChange={this.onFocusChange} // PropTypes.func.isRequired
+            numberOfMonths={1}
+            firstDayOfWeek={1}
+            isOutsideRange={(day) => false}
+            displayFormat={'DD MMM YYYY'}
+          />
           <div>
             <textarea
               placeholder="Add a note for your expense (optional)"
@@ -98,4 +126,4 @@ class ExpenseForm extends React.Component {
   }
 }
 
-export default connect()(ExpenseForm);
+export default ExpenseForm;
