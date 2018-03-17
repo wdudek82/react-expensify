@@ -1,4 +1,4 @@
-// =============== Filter Action Generators
+// Filter Action Generators
 const setTextFilter = (text = '') => ({
   type: 'SET_TEXT_FILTER',
   text
