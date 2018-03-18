@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
+import logger from 'redux-logger';
 
 import expensesReducer from '../reducers/expenses';
 import filtersReducer from '../reducers/filters';
@@ -15,7 +16,8 @@ export default () => {
       typeof window !== 'undefined' &&
       window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+    ),
+    // applyMiddleware(logger)
   );
 
   return store;
