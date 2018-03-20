@@ -14,6 +14,7 @@ import getVisibleExpenses from './selectors/expenses';
 
 import 'normalize.css/normalize.css';
 import './scss/main.scss';
+import 'react-dates/lib/css/_datepicker.css';
 
 const store = configureStore();
 
@@ -22,7 +23,7 @@ store.dispatch(
     description: 'Water Bill',
     note: 'My water bill for February',
     amount: 5200,
-    createdAt: moment('19820511', 'YYYYMMDD').valueOf()
+    createdAt: moment('20180311', 'YYYYMMDD').valueOf()
   })
 );
 
@@ -48,30 +49,9 @@ store.dispatch(
   addExpense({
     description: 'Rent',
     amount: 100500,
-    createdAt: moment('19861118', 'YYYYMMDD').valueOf()
+    createdAt: moment('20181118', 'YYYYMMDD').valueOf()
   })
 );
-
-
-// store.dispatch(
-//   setTextFilter('water')
-// );
-
-// store.dispatch(
-//   setSortByAmountFilter()
-// );
-
-// setTimeout(() => {
-//   store.dispatch(setTextFilter('bill'))
-// }, 3000);
-
-const state = store.getState();
-const visibleExpenses = getVisibleExpenses(
-  state.expenses,
-  state.filters
-);
-
-// console.log(visibleExpenses);
 
 const jsx = (
   <Provider store={store}>
