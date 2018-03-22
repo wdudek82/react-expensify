@@ -7,9 +7,13 @@
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
-    "test": "jest --config jest.config.json"
+    "test": "jest --config jest.config.json",
+    "start": "node server/server.js",
+    "heroku-postbuild": "npm run build:prod"
   },
   "dependencies": {
+    "express": "^4.16.3",
+    "heroku-cli": "^6.15.37",
     "moment": "^2.21.0",
     "normalize.css": "^8.0.0",
     "react": "^16.2.0",
