@@ -1,5 +1,2 @@
 node_modules/
-public/bundle.js
-public/*.map
-public/*.css
-yarn-error.log
+public/dist/

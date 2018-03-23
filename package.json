@@ -26,7 +26,9 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "uuid": "^3.2.1",
-    "validator": "^9.4.1"
+    "validator": "^9.4.1",
+    "webpack": "^3.1.0",
+    "webpack-cli": "^2.0.11"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -42,14 +44,11 @@
     "enzyme-to-json": "^3.3.3",
     "extract-text-webpack-plugin": "^2.1.2",
     "jest": "^22.4.2",
-    "live-server": "^1.2.0",
     "node-sass": "^4.8.1",
     "raf": "^3.4.0",
     "react-test-renderer": "^16.2.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
-    "webpack": "^3.1.0",
-    "webpack-cli": "^2.0.11",
     "webpack-dev-server": "^2.5.1"
   }
 }
