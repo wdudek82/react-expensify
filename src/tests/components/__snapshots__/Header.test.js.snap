@@ -29,9 +29,3 @@ exports[`should render Header correctly 1`] = `
   </NavLink>
 </header>
 `;
-
-exports[`should render HelpPage correctly 1`] = `
-<div>
-  Help Page
-</div>
-`;

@@ -16,6 +16,7 @@
     "heroku-cli": "^6.15.37",
     "moment": "^2.21.0",
     "normalize.css": "^8.0.0",
+    "numeral": "^2.0.6",
     "react": "^16.2.0",
     "react-addons-shallow-compare": "^15.6.2",
     "react-dates": "^12.7.0",
