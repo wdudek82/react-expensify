@@ -115,7 +115,7 @@ class ExpenseForm extends React.Component {
               onChange={this.onNoteChange}
             ></textarea>
           </div>
-          <input type="submit" value="Add Expense" />
+          <input type="submit" value="Submit" />
         </form>
       </div>
     );
