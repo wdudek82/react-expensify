@@ -11,6 +11,4 @@ const config = {
 
 firebase.initializeApp(config);
 
-firebase.database().ref().set({
-  name: 'Wojtek Dudek'
-});
+const database = firebase.database();
